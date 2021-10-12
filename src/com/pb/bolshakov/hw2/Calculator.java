@@ -55,7 +55,7 @@ public class Calculator {
                 result = operand1/operand2;
                 break;
             default:
-                System.out.println("Операция не найдена. Повторите ввод еще раз.");
+                System.out.println("Операция не верная. Повторите ввод еще раз.");
                 result = calc(operand1, operand2, getOperation());
         }
         return result;
