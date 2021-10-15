@@ -23,6 +23,9 @@ public class Interval {
         } else if (x >= h && x <= j) {
             System.out.print("Число " + x + "  в интервал от " + h + " до " + j + "\n");
             System.out.print("Число " + x + " является отрицательным");
-        }
+
+            System.out.print("Ваше число " + x + " не попадает ни в один интервал");
+        } else if (x <= j) {
+            System.out.print("Ваше число " + x + " является отрицательным"); }
     }
 }
