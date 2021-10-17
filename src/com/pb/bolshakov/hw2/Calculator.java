@@ -23,23 +23,18 @@ public class Calculator {
             case "+":
                 System.out.println(+(operand1 + operand2));
                 break;
-
             case "-":
                 System.out.println(+(operand1 - operand2));
                 break;
-
             case "*":
                 System.out.println(+(operand1 * operand2));
                 break;
-
             case "/":
-                System.out.println(+(operand1 / operand2));
-            {
-                if (operand2 == 0) ;
-                System.out.println("Ошибочка. Делить на ноль нелзя");
-            }
+                System.out.println("ERROR. Делить на ноль нельзя");
+                if ( operand1 == 0) ;
+                if ( operand1 != 0) ;
+                System.out.println(operand1 + "/" + operand2 + "=" + (operand1 / operand2));
             break;
-
             default: {
                 System.out.println("Неверная операция");
             }
