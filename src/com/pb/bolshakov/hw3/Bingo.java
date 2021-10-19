@@ -4,70 +4,77 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Bingo {
-
-        public static void main(String[] args) {
-
-            System.out.println ("Угадай число:");
-
-            try {
-                while (true) {
-
-                    System.out.println (" Введите -2 в любое время, чтобы выйти из программы!");
-
-                    // Создаем объект, который может получать входной поток из консоли.
-                    Scanner scanner = new Scanner(System.in);
-
-                    // Допустимое количество предположений
-                    int guessCount = 0; // Оставшееся время
-                    int rand  = scanner.nextInt (); // Получить номер ввода из консоли и присвоить его уровню
+    public static void main(String[] args) {
 
 
-                    if (rand == -1) {// Выберите -1, чтобы завершить программу
+
+        try {
+            while (true) {
+
+                System.out.println ("Выберите сложность: 1 легкий,  2 средний, 3 сложный. Введите -1 в любое время, чтобы выйти из программы!");
+
+
+                Scanner scanner = new Scanner(System.in);
+
+                int count = 10;
+                int guessCount = 50;
+                int level = scanner.nextInt ();
+
+                if (level == 1) {
+                    count = 50;
+                    guessCount = 1;
+                }
+                else if (level == 2) {
+                    count = 25;
+                    guessCount = 1;
+                }
+                else if (level == 3) {
+                    count = 10;
+                    guessCount = 1;
+                }
+                else if (level == -1) {
+                    System.exit(0);
+                }
+                else {
+                    System.out.println ("Сложность выбора неверна, программа завершается.");
+                    System.exit(0);
+                }
+
+                int randomNum = (int) Math.round (Math.random () * 100);
+
+                boolean bingo = false;
+
+                for (int i = 0; i <count; i ++) {
+
+                    System.out.println ("Введите число от 0 до 100");
+
+                    int inputNum = scanner.nextInt ();
+
+                    if (inputNum == -1) {
+                        System.out.println ("Конец программы!");
                         System.exit(0);
                     }
-                    else {// не 1, 2, -1, завершаем программу
-                        System.out.println ("Сдался, программа завершается.");
-                        System.exit(0);
+                    else if (inputNum == randomNum) {
+                        bingo = true;
+                        break;
                     }
-
-                    int randomNum = (int) Math.round (Math.random () * 100); // Получаем случайное целое число, диапазон [0-100]
-
-                    boolean bingo = false; // Если предположение верное, оно верное.
-
-
-                    byte count = 0;
-                    for (int i = 0; i < count; i ++) {// Цикл в соответствии с выбранным количеством раз.
-
-                        System.out.println ("Введите число от 0 до 100");
-
-
-                        int inputNum = scanner.nextInt(); // Получить номер ввода из консоли
-
-                        if (inputNum == -1) {// - 1 конец программы
-                            System.out.println ("Конец программы!");
-                            System.exit(0);
-                        }
-                        else if (inputNum == randomNum) {// Судя по тому, что введенное число равно случайному числу, вы угадали.
-                            bingo = true; // Затем измените bingo на true, чтобы указать, что предположение верное.
-                            break; // Наконец, завершаем все на break
-                        }
-                        else {// Если указанные выше условия не выполняются
-                            guessCount--; // Уменьшаем оставшееся время на 1, это эквивалентно guessCount = guessCount-1;
-                            System.out.println ("Число, которое вы угадали" + (inputNum> randomNum? "Big": "Small") + "Теперь, оставшееся время" + guessCount);
-                        }
+                    else {
+                        guessCount++;
+                        System.out.println ("Число, которое, Вы, написали" + (inputNum> randomNum? " больше задуманого . " : " меньше задуманого. ") + "Попытка " + guessCount + " из возможных " + count);
                     }
+                }
 
-                    if (bingo) {// После завершения цикла судите, правильно ли вы угадали
-                        System.out.println ("Как вы уже догадались, это число" + randomNum + "!  N");
-                    }
-
+                if (bingo) {
+                    System.out.println (" Вы молодцы, это число " + randomNum );
+                }
+                else {
+                    System.out.println ("Все время израсходовано, вы не угадали!");
                 }
             }
-            catch (Exception e) {
-                System.err.println ("Вы ввели не целое число, программа завершается!");
-            }
+        }
+        catch (Exception e) {
+            System.err.println ("Вы ввели не целое число, программа завершается!");
         }
     }
-
-
+}
 
