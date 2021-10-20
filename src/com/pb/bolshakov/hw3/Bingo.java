@@ -21,15 +21,15 @@ public class Bingo {
                 int level = scanner.nextInt ();
 
                 if (level == 1) {
-                    count = 50;
-                    guessCount = 1;
-                }
-                else if (level == 2) {
                     count = 25;
                     guessCount = 1;
                 }
-                else if (level == 3) {
+                else if (level == 2) {
                     count = 10;
+                    guessCount = 1;
+                }
+                else if (level == 3) {
+                    count = 5;
                     guessCount = 1;
                 }
                 else if (level == -1) {
