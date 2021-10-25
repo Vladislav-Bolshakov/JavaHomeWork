@@ -6,7 +6,7 @@ public class Anagram {
     public static void main(String[] input)
     {
         String str1, str2;
-        int len, len1, len2, i, j, found=0, not_found=0;
+        int len, len1, len2, i, j, found= 0, not_found=0;
         Scanner scan = new Scanner(System.in);
 
 
