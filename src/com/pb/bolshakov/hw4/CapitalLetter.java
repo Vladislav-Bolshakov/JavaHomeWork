@@ -12,8 +12,8 @@ public class CapitalLetter {
 
         String [] words = s.split("\\s+");
         String snew = "";
-        for (int i = 0; i < words.length; i++) {
-            snew = snew + words[i].substring(0,1).toUpperCase() + words[i].substring(1)+" ";
+        for (String word : words) {
+            snew = snew + word.substring(0, 1).toUpperCase() + word.substring(1) + " ";
         }
         System.out.println(snew.trim());
 
