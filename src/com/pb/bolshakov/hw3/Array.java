@@ -9,6 +9,7 @@ public class Array {
         int[] array = new int[10];
         int[] a = {-5, 16, 7, -7, -9, 2, -1, 11, -5, 5};
 
+
         for (int i = 0; i < a.length; i++) {
             System.out.println(a[i]);
         }
