@@ -11,12 +11,9 @@ public class Book {
         this.year = year;
     }
 
-    public Book() {
-    }
+    public Book() {}
 
-    public String getName() {
-        return name;
-    }
+    public String getName() {return name;}
 
     public void setName(String name) {
         this.name = name;
@@ -35,5 +32,5 @@ public class Book {
     public String getInfo() {
         return "[ Название: " + name +",  Автор:" + author
                 + ", Год выпуска:" + year + "]";
-                };
-    }
+                }
+}
