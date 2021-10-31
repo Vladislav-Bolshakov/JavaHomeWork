@@ -3,57 +3,63 @@ package com.pb.bolshakov.hw4;
 import java.util.Scanner;
 
 public class Anagram {
-    public static void main(String[] input)
-    {
-        String str1, str2;
-        int len, len1, len2, i, j, found= 0, not_found=0;
-        Scanner scan = new Scanner(System.in);
+    public static boolean areAnagrams(String string1,
+                                      String string2) {
 
+        String workingCopy1 = removeJunk(string1);
+        String workingCopy2 = removeJunk(string2);
 
-        System.out.print("Введите первую строку : ");
-        str1 = scan.nextLine();
+        workingCopy1 = workingCopy1.toLowerCase();
+        workingCopy2 = workingCopy2.toLowerCase();
 
-        System.out.print("Введите вторую строку : ");
-        str2 = scan.nextLine();
+        workingCopy1 = sort(workingCopy1);
+        workingCopy2 = sort(workingCopy2);
 
-
-        len1 = str1.length();
-        len2 = str2.length();
-
-
-        if(len1 == len2)
-        {
-            len = len1;
-            for(i=0; i<len; i++)
-            {
-                found = 0;
-                for(j=0; j<len; j++)
-                {
-                    if(str1.charAt(i) == str2.charAt(j))
-                    {
-                        found = 1;
-                        break;
-                    }
-                }
-                if(found == 0)
-                {
-                    not_found = 1;
-                    break;
-                }
-            }
-            if(not_found == 0)
-            {
-                System.out.print("Не являются анаграммами друг для друга");
-            }
-            else
-            {
-                System.out.print("Это анаграмма");
-            }
-        }
-        else
-        {
-            System.out.print("Обе строки должны иметь одинаковое количество символов, чтобы быть анаграммой");
-        }
+        return workingCopy1.equals(workingCopy2);
     }
 
-}
+    protected static String removeJunk(String string) {
+        int i, len = string.length();
+        StringBuilder dest = new StringBuilder(len);
+        char c;
+
+        for (i = (len - 1); i >= 0; i--) {
+            c = string.charAt(i);
+            if (Character.isLetter(c)) {
+                dest.append(c);
+            }
+        }
+
+        return dest.toString();
+    }
+
+    protected static String sort(String string) {
+        char[] charArray = string.toCharArray();
+
+        java.util.Arrays.sort(charArray);
+
+        return new String(charArray);
+    }
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        String  string1,  string2;
+
+        System.out.println();
+        System.out.println("Проверка на Анаграмму");
+        System.out.print("Введите первую строку : ");
+        string1 = scan.nextLine();
+        System.out.print("Введите вторую строку : ");
+        string2 = scan.nextLine();
+        System.out.println();
+
+        if (areAnagrams(string1, string2)) {
+            System.out.println("Это анаграмма!");
+        } else {
+            System.out.println("Не являются анаграммами друг для друга!");
+        }
+        System.out.println();
+    }
+
+  }
