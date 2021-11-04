@@ -1,6 +1,7 @@
 package com.pb.bolshakov.hw5;
 
-public class Library {    public static void main(String[] args) {
+public class Library {
+    public static void main(String[] args) {
     Reader reader1 = new Reader("Петров В.В.", 1, "SMT", "23.11.2000", "+0887854321");
     Reader reader2 = new Reader("Печкин В.И.", 2, "SMT", "16.09.1999", "+0997123479");
     Reader reader3 = new Reader("Карманов К.А.", 3, "SMT", "06.07.2002", "+055957435");
