@@ -4,8 +4,10 @@ import java.util.Scanner;
 
 public class OnlineShop {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         String sp=" ";
+
         System.out.println("Регестрация");
         System.out.println("Введіть ім'я користувача");
         String login = sc.nextLine();
@@ -26,9 +28,8 @@ public class OnlineShop {
             System.out.println("Недійсний пароль");
             return;
         }
-
-
         System.out.println( login+" ви успішно зареєстровані");
+        signUp(login,password,confirmPassword);
 
         System.out.println("Введіть ім'я користувачаe");
         String lname = sc.nextLine();
@@ -42,5 +43,12 @@ public class OnlineShop {
             System.out.println("Невідповідність імені користувача або пароля");
         }
     }
+
+    private static void signUp(String login, String password, String confirmPassword) {
+    }
+
+
+
 }
+
 
