@@ -1,45 +1,50 @@
 package com.pb.bolshakov.hw8;
 
-import javax.swing.*;
-import java.awt.event.*;
+import java.util.regex.Pattern;
 
-public class Auth extends JFrame implements ActionListener{
+public class Auth {
 
-    private JTextField login;
-    private JTextField password;
-    private JTextField confirmPassword;
+    private String login;
+    private String password;
+    private String confirmPassword;
 
-    public JTextField getLogin() {
-        return login;
+    public Auth(String login,String password,String confirmPassword){
+        this.login = login;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
-    public JTextField getPassword() {
-        return password;
-    }
+    public void signUp(String login,String password,String confirmPassword)
+    throws WrongLoginException,WrongPasswordException {
+        if (!Pattern.matches("[\\w]{5,20}", login)) {
+        } else {
+            throw new WrongLoginException();
 
-    public JTextField getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void actionPerformed(ActionEvent ae) {
-        try {
-            checkLogInInfo(login.getText(), password.getText(), confirmPassword.getText(), "[\\w]{5,20}");
-            JOptionPane.showMessageDialog(this, "Login and password are correct!",
-                    "User login&password confirmation", JOptionPane.PLAIN_MESSAGE);
-        } catch (com.pb.bolshakov.hw8.WrongLoginException | com.pb.bolshakov.hw8.WrongPasswordException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(),
-                    "UserException", JOptionPane.ERROR_MESSAGE);
         }
+        if (!Pattern.matches("[\\w]{5,20}", password)) {
+        } else {
+            throw new WrongPasswordException();
+        }
+            System.out.println("Регестрация прошла успешно");
+
+
+        }
+
+    public void signln(String login,String password)
+            throws WrongLoginException,WrongPasswordException {
+        if (!Pattern.matches("[\\w]{5,20}", login)) {
+        } else {
+            throw new WrongLoginException();
+        }
+        if (!Pattern.matches("[\\w]{5,20}", password)) {
+        } else {
+            throw new WrongPasswordException();
+        }
+        System.out.println("Вход прошлел успешно");
+
+
     }
 
-    private boolean checkLogInInfo(String login, String password, String confirmPassword, String regex)
-            throws com.pb.bolshakov.hw8.WrongLoginException, com.pb.bolshakov.hw8.WrongPasswordException {
-        if (!login.matches(regex)) {
-            throw new WrongLoginException("Incorrect login");
-        } else if (!password.matches(regex) ||
-                !confirmPassword.matches(regex) ||
-                !password.equals(confirmPassword)) {
-            throw new WrongPasswordException("Incorrect password");
-        }
-        return true;
-    }}
+
+
+}
