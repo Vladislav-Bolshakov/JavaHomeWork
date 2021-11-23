@@ -1,0 +1,331 @@
+Index: src/com/pb/bolshakov/hw8/test/WrongConfirmPasswordException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/pb/bolshakov/hw8/test/WrongConfirmPasswordException.java b/src/com/pb/bolshakov/hw8/test/WrongConfirmPasswordException.java
+new file mode 100644
+--- /dev/null	(date 1637415748776)
++++ b/src/com/pb/bolshakov/hw8/test/WrongConfirmPasswordException.java	(date 1637415748776)
+@@ -0,0 +1,23 @@
++package com.pb.bolshakov.hw8.test;
++
++public class WrongConfirmPasswordException  extends Exception {
++        private String detail;
++
++        public WrongConfirmPasswordException() {
++            detail = "Incorrect login";
++        }
++
++        public WrongConfirmPasswordException(String message) {
++            super(message);
++            detail = message;
++        }
++
++        @Override
++        public String toString() {
++            return "WrongConfirmPasswordException: " + detail;
++        }
++}
++
++
++
++
+Index: src/com/pb/bolshakov/hw8/test/Auth.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/pb/bolshakov/hw8/test/Auth.java b/src/com/pb/bolshakov/hw8/test/Auth.java
+new file mode 100644
+--- /dev/null	(date 1637416314978)
++++ b/src/com/pb/bolshakov/hw8/test/Auth.java	(date 1637416314978)
+@@ -0,0 +1,53 @@
++package com.pb.bolshakov.hw8.test;
++
++import sun.rmi.transport.Connection;
++
++import javax.swing.*;
++import java.awt.event.ActionEvent;
++import java.awt.event.ActionListener;
++import java.io.IOException;
++import java.io.InputStream;
++import java.nio.file.Files;
++import java.nio.file.Paths;
++import java.sql.DriverManager;
++import java.sql.SQLException;
++import java.util.Properties;
++
++public class Auth extends JFrame implements ActionListener {
++
++
++
++    public static void main(String[] args) {
++        try{
++            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
++            try (Connection conn = getConnection()){
++
++                System.out.println("Connection to Store DB succesfull!");
++            }
++        }
++        catch(Exception ex){
++            System.out.println("Connection failed...");
++
++            System.out.println(ex);
++        }
++    }
++
++    public static Connection getConnection() throws SQLException, IOException {
++
++        Properties props = new Properties();
++        try(InputStream in = Files.newInputStream(Paths.get("database.properties"))){
++            props.load(in);
++        }
++        String url = props.getProperty("url");
++        String username = props.getProperty("username");
++        String password = props.getProperty("password");
++
++        return DriverManager.getConnection(url, username, password);
++    }
++
++    @Override
++    public void actionPerformed(ActionEvent e) {
++
++    }
++}
++
+Index: src/com/pb/bolshakov/test2/UserInformation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/pb/bolshakov/test2/UserInformation.java b/src/com/pb/bolshakov/test2/UserInformation.java
+new file mode 100644
+--- /dev/null	(date 1637407124134)
++++ b/src/com/pb/bolshakov/test2/UserInformation.java	(date 1637407124134)
+@@ -0,0 +1,29 @@
++package com.pb.bolshakov.test2;
++
++public class UserInformation {
++    private String username;
++
++    private String passworld;
++
++    public UserInformation(){
++
++    }
++
++    public String getUsername() {
++        return username;
++    }
++
++    public void setUsername(String username) {
++        this.username = username;
++    }
++
++    public String getPassworld() {
++        return passworld;
++    }
++
++    public void setPassworld(String passworld) {
++        this.passworld = passworld;
++    }
++
++}
++
+Index: src/com/pb/bolshakov/test2/UserInformationDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/pb/bolshakov/test2/UserInformationDao.java b/src/com/pb/bolshakov/test2/UserInformationDao.java
+new file mode 100644
+--- /dev/null	(date 1637407124130)
++++ b/src/com/pb/bolshakov/test2/UserInformationDao.java	(date 1637407124130)
+@@ -0,0 +1,10 @@
++package com.pb.bolshakov.test2;
++
++public interface UserInformationDao {
++    public abstract boolean isLogin(String username,String passworld);
++
++    // Функция регистрации пользователя
++    public abstract void regist(UserInformation userinformation);
++
++}
++
+Index: src/com/pb/bolshakov/test2/UserInformationDaoImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/pb/bolshakov/test2/UserInformationDaoImpl.java b/src/com/pb/bolshakov/test2/UserInformationDaoImpl.java
+new file mode 100644
+--- /dev/null	(date 1637407124120)
++++ b/src/com/pb/bolshakov/test2/UserInformationDaoImpl.java	(date 1637407124120)
+@@ -0,0 +1,35 @@
++package com.pb.bolshakov.test2;
++
++import java.util.ArrayList;
++
++public class UserInformationDaoImpl  implements UserInformationDao{
++
++    // Обратите внимание, что переменные здесь должны быть статическими,
++    // Поскольку переменные-члены существуют вместе с объектом, и мы создаем и используем два объекта при регистрации и входе в систему,
++    // логин и регистрация должны использовать одну и ту же коллекцию, чтобы иметь смысл (чтобы можно было найти зарегистрированную учетную запись)
++    private static ArrayList<UserInformation> array=new ArrayList<UserInformation>();
++
++    public boolean isLogin(String username, String passworld) {
++
++        boolean flag=false;
++
++        for (UserInformation ui:array){
++            if(ui.getUsername().equals(username)&&
++                    ui.getPassworld().equals(passworld)){
++                flag=true;
++                break;
++            }
++        }
++
++        return flag;
++    }
++
++
++    public void regist(UserInformation userinformation) {
++
++        array.add(userinformation);
++
++    }
++
++}
++
+Index: src/com/pb/bolshakov/test2/UserInformationTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/pb/bolshakov/test2/UserInformationTest.java b/src/com/pb/bolshakov/test2/UserInformationTest.java
+new file mode 100644
+--- /dev/null	(date 1637407124116)
++++ b/src/com/pb/bolshakov/test2/UserInformationTest.java	(date 1637407124116)
+@@ -0,0 +1,73 @@
++package com.pb.bolshakov.test2;
++
++import java.util.Scanner;
++
++public class UserInformationTest {
++    public static void main(String[] args) {
++        while(true) {
++            System.out.println("---------- Добро пожаловать ----------");
++            System.out.println("1. Вход 2. Регистрация 3. Выход");
++            System.out.println("Пожалуйста, введите ваш выбор");
++            Scanner sc=new Scanner(System.in);
++            UserInformationDao uid=new UserInformationDaoImpl();
++            String choice = sc.nextLine();
++            switch (choice) {
++
++                // логин
++                case "1":
++                    System.out.println("---------- Логин ----------");
++
++                    System.out.println("Пожалуйста, введите логин");
++                    String name=sc.nextLine();
++                    System.out.println("Пожалуйста, введите  пароль");
++                    String password=sc.nextLine();
++
++
++                    boolean flag=uid.isLogin(name, password);
++                    if(flag) {
++                        System.out.println("Успешный вход");
++                        System.exit(0);
++                    }else {
++                        System.out.println("Неверное имя пользователя или пароль, вход не выполнен");
++                    }
++                    break;
++
++                // зарегистрироваться
++                case "2":
++                    System.out.println("---------- Регистрация ----------");
++
++                    System.out.println("Пожалуйста, введите зарегистрированное имя пользователя");
++                    String newname=sc.nextLine();
++                    System.out.println("Пожалуйста, введите зарегистрированный пароль");
++                    String newpassword=sc.nextLine();
++                    System.out.println("Пожалуйста,введите  пароль");
++                    String newconfirmPassword=sc.nextLine();
++
++                    UserInformation u=new UserInformation();
++                    u.setPassworld(newpassword);
++                    u.setUsername(newname);
++
++                    uid.regist(u);
++
++                    System.out.println("Регистрация прошла успешно");
++                    break;
++
++                // Выход
++                case "3":
++                    System.out.println("Спасибо за ваше использование");
++                    sc.close();
++                    System.exit(0);
++                    break;
++                default:
++                    System.out.println("Неверный ввод, пожалуйста, введите заново");
++                    break;
++
++            }
++
++        }
++
++    }
++
++
++}
++
+Index: src/com/pb/bolshakov/hw9/FileNumbers.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/pb/bolshakov/hw9/FileNumbers.java b/src/com/pb/bolshakov/hw9/FileNumbers.java
+new file mode 100644
+--- /dev/null	(date 1637408127169)
++++ b/src/com/pb/bolshakov/hw9/FileNumbers.java	(date 1637408127169)
+@@ -0,0 +1,38 @@
++package com.pb.bolshakov.hw9;
++
++import java.io.BufferedWriter;
++import java.io.File;
++import java.io.FileWriter;
++import java.io.IOException;
++import java.util.Random;
++
++public class FileNumbers {
++        public static void main() {
++            // Целевой файл
++            File out = new File("numbers.txt");
++            FileWriter fw = null;
++            int n = 99;
++            // Блок попытки: большинство потоковых операций могут вызывать исключение ввода-вывода.
++            try {
++                // Создать объект записи файла
++                fw = new FileWriter(out);
++                // Оберните писателя буферизованными потоками
++                BufferedWriter writer = new BufferedWriter(fw);
++                int line;
++                Random random = new Random();
++                while (n > 0) {
++                    // Произвести рандомизацию целого числа и записать его в выходной файл
++                    line = random.nextInt(1000);
++                    writer.write(line);
++                    writer.newLine();
++                    n--;
++                }
++                // Закройте поток
++                writer.close();
++            } catch (IOException e) {
++                e.printStackTrace();
++                System.exit(0);
++            }
++        }
++    }
++
