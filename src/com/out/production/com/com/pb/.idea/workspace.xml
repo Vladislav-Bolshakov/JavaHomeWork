@@ -28,6 +28,14 @@
       <option name="presentableId" value="Default" />
       <updated>1637689458822</updated>
     </task>
+    <task id="LOCAL-00001" summary="Delete src/com/pb/bolshakov directory">
+      <created>1637689703020</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1637689703020</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -40,5 +48,26 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Delete src/com/pb/bolshakov directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete src/com/pb/bolshakov directory" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bolshakov/hw9/FileNumbers.class</url>
+          <line>14</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bolshakov/hw8/Auth.class</url>
+          <line>9</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
